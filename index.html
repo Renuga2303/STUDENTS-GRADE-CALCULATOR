@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grade Calculator</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eaf2ff;
+            text-align: center;
+            padding: 30px;
+        }
+        .box {
+            background: white;
+            padding: 25px;
+            max-width: 350px;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px #aaa;
+        }
+        input, button {
+            padding: 10px;
+            margin: 8px;
+            width: 85%;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Student Grade Calculator</h2>
+
+        <input id="name" placeholder="Student Name">
+
+        <input id="m1" type="number" min="0" max="100" placeholder="Subject 1 Marks">
+        <input id="m2" type="number" min="0" max="100" placeholder="Subject 2 Marks">
+        <input id="m3" type="number" min="0" max="100" placeholder="Subject 3 Marks">
+        <input id="m4" type="number" min="0" max="100" placeholder="Subject 4 Marks">
+        <input id="m5" type="number" min="0" max="100" placeholder="Subject 5 Marks">
+
+        <button onclick="calculate()">Calculate Grade</button>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            let name = document.getElementById("name").value;
+            let marks = [];
+
+            for (let i = 1; i <= 5; i++) {
+                let value = document.getElementById("m" + i).value;
+
+                if (value === "" || Number(value) < 0 ||
+                    Number(value) > 100) {
+                    document.getElementById("result").innerText =
+                        "Enter valid marks (0–100) in all subjects!";
+                    return;
+                }
+
+                marks.push(Number(value));
+            }
+
+            if (name.trim() === "") {
+                document.getElementById("result").innerText =
+                    "Please enter student name!";
+                return;
+            }
+
+            let total = marks.reduce((a, b) => a + b, 0);
+            let avg = total / 5;
+            let grade = avg >= 90 ? "A+" :
+                        avg >= 80 ? "A" :
+                        avg >= 70 ? "B" :
+                        avg >= 60 ? "C" :
+                        avg >= 50 ? "D" : "F";
+
+            document.getElementById("result").innerHTML =
+                "Student: " + name +
+                "<br>Total: " + total + " / 500" +
+                "<br>Average: " + avg.toFixed(2) +
+                "<br>Grade: " + grade;
+        }
+    </script>
+</body>
+</html>
